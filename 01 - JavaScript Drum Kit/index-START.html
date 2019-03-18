@@ -57,10 +57,27 @@
   <audio data-key="75" src="sounds/tom.wav"></audio>
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
-<script>
+  <script>
+    const deTransition = (e) => {
+      if (e.propertyName !== 'transform') return;
+      e.target.classList.remove('playing');
+    }
 
+    const handleKeyDown = (e) => {
+      var myDiv = document.querySelector(`div[data-key="${e.keyCode}"]`)
+      var myAudio = document.querySelector(`audio[data-key="${e.keyCode}"]`)
+
+      if (!myAudio) return;
+
+      myDiv.classList.add('playing');
+      myAudio.currentTime = 0;
+      myAudio.play()
+    }
+
+    let divs = Array.from(document.querySelectorAll('.key'));
+    divs.forEach( d => d.addEventListener("transitionend", deTransition));
+    window.addEventListener("keydown", handleKeyDown);
 </script>
-
 
 </body>
 </html>
